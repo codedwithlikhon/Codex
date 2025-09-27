@@ -1,0 +1,25 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run AI Code Review
+        run: |
+          docker build -t code-review-agent ./code-review-agent
+          docker run \
+            --env GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            --env GITHUB_REPOSITORY=${{ github.repository }} \
+            --env GITHUB_EVENT_PATH=${{ github.event_path }} \
+            --volume "${{ github.event_path }}":"${{ github.event_path }}" \
+            code-review-agent

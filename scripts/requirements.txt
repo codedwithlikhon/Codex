@@ -1,3 +1,0 @@
-pymongo
-google-generativeai
-python-dotenv

@@ -1,4 +1,0 @@
-psycopg2-binary
-google-generativeai
-python-dotenv
-pgvector
